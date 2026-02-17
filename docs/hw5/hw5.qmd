@@ -2,6 +2,8 @@
 title: "HW5"
 format: html
 output-file: "index"
+execute:
+  echo: false
 ---
 
 [Graphic on 2025 Confirmed Measles Cases in the US and Canada](https://www.reddit.com/r/dataisbeautiful/comments/1r19r4w/oc_2025_measles_cases_in_the_us_and_canada/#lightbox)
@@ -13,3 +15,55 @@ c. The main story of the first one is showing the distribution/concentration of 
 d. It is a good graphic because it has a guide and it is easy to interpret the data.
 e. I probably can use color and probably the guide.
 f. I wouldn't know to draw out the map layout.
+
+Exercise 3.1
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+  },
+  "width": 800,
+  "height": 200,
+  "title": "High Temperatures in Seattle by day of the year",
+  "transform": [
+    {"filter": "datum.location == \'Seattle\'"}
+  ],
+  "mark": {"type": "line", "color": "indianred"},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "timeUnit": "dayofyear", "title": "Day of the year"},
+    "y": {"field": "temp_max", "type": "quantitative", "title": "Max Temperature (°C)"},
+    "opacity": {"value": 0.7},
+    "color": {"field": "year", "type": "nominal", "title": "Year"}
+  }
+}' |> as_vegaspec()
+```
+\
+
+Exercise 3.2
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+  },
+  "width": 800,
+  "height": 200,
+  "title": "Temperatures Distibution in Seattle by month of the year",
+  "transform": [
+    {"filter": "datum.location == \'Seattle\'"}
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {"field": "month", "type": "ordinal", "timeUnit": "month", "title": "Month of the year"},
+    "y": {"field": "temp_max", "type": "quantitative", "title": "Max Temperature (°C)"},
+    "opacity": {"value": 0.7},
+    "color": {"field": "weather", "type": "nominal", "title": "Weather"}
+  }
+}' |> as_vegaspec()
+```

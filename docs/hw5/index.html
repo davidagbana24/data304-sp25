@@ -34,6 +34,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="hw5_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="hw5_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="hw5_files/libs/bootstrap/bootstrap-a3e94113f832f1a3e99aed9357d017bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="hw5_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="hw5_files/libs/vega-5.24.0/vega@5.24.0.min.js"></script>
+<script src="hw5_files/libs/vega-lite-5.16.3/vega-lite@5.16.3.min.js"></script>
+<link href="hw5_files/libs/vega-embed-6.22.2/vega-embed.css" rel="stylesheet">
+<script src="hw5_files/libs/vega-embed-6.22.2/vega-embed@6.22.2.min.js"></script>
+<script src="hw5_files/libs/vegawidget-vl5-binding-0.5.0/vegawidget-vl5.js"></script>
 
 
 </head>
@@ -77,6 +83,109 @@ ul.task-list li input[type="checkbox"] {
 <li>I probably can use color and probably the guide.</li>
 <li>I wouldn’t know to draw out the map layout.</li>
 </ol>
+<p>Exercise 3.1</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-811e2a99f55e82172a5c" style="width:auto;height:auto;" class="vegawidget-vl5 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-811e2a99f55e82172a5c">{"x":{
+  "chart_spec": {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+    },
+    "width": 800,
+    "height": 200,
+    "title": "High Temperatures in Seattle by day of the year",
+    "transform": [
+      {
+        "filter": "datum.location == 'Seattle'"
+      }
+    ],
+    "mark": {
+      "type": "line",
+      "color": "indianred"
+    },
+    "encoding": {
+      "x": {
+        "field": "date",
+        "type": "temporal",
+        "timeUnit": "dayofyear",
+        "title": "Day of the year"
+      },
+      "y": {
+        "field": "temp_max",
+        "type": "quantitative",
+        "title": "Max Temperature (°C)"
+      },
+      "opacity": {
+        "value": 0.7
+      },
+      "color": {
+        "field": "year",
+        "type": "nominal",
+        "title": "Year"
+      }
+    }
+  },
+  "embed_options": {
+    "renderer": "canvas",
+    "defaultStyle": true
+  }
+},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p><br>
+</p>
+<p>Exercise 3.2</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-09b62180a8f54d8f087c" style="width:auto;height:auto;" class="vegawidget-vl5 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-09b62180a8f54d8f087c">{"x":{
+  "chart_spec": {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://calvin-data304.netlify.app/data/weather-with-dates.csv"
+    },
+    "width": 800,
+    "height": 200,
+    "title": "Temperatures Distibution in Seattle by month of the year",
+    "transform": [
+      {
+        "filter": "datum.location == 'Seattle'"
+      }
+    ],
+    "mark": {
+      "type": "bar"
+    },
+    "encoding": {
+      "x": {
+        "field": "month",
+        "type": "ordinal",
+        "timeUnit": "month",
+        "title": "Month of the year"
+      },
+      "y": {
+        "field": "temp_max",
+        "type": "quantitative",
+        "title": "Max Temperature (°C)"
+      },
+      "opacity": {
+        "value": 0.7
+      },
+      "color": {
+        "field": "weather",
+        "type": "nominal",
+        "title": "Weather"
+      }
+    }
+  },
+  "embed_options": {
+    "renderer": "canvas",
+    "defaultStyle": true
+  }
+},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 
 </main>
 <!-- /main column -->
