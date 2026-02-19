@@ -1,0 +1,93 @@
+---
+title: "HW6"
+format: html
+output-file: "index"
+execute:
+  echo: false
+---
+
+HW 6
+
+
+Exercise 1
+
+
+a.	The most interesting lesson for me was the interaction of space and time in graphics especially the third example that mixes up space and time on the y axis which is really interesting because a graphic like that actually tells a story and makes it easier for viewers to infer what the purpose of the graph is.
+
+
+b.  I would say my favorite graphic was on page 53.
+
+
+![Favorite Graphic](/Screenshot 2026-02-18 175331.png)
+
+  I picked this graphic because it is really simple to interpret but has some complex components and there is a good amount of detail in using the data as the data point. Very interesting and would be good for analogies when teaching.
+  
+
+The encoding channels used were position and shape! Position is associated with fear and rage. Shape is also associated with fear and rage.
+It would definitely be hard to use the data(bear expressions) as datapoints/ as the marks.
+Tufte was showing relational designs.
+
+
+Exercise 2
+•	Pages 81-90: Graphics that use bars should have a baseline for the best interpretation by the viewer.
+
+
+•	Consistency of range of values on the x and y axes. Considering labeling data points instead of assigning multiple variables to one axis.
+
+
+•	Important questions to ask yourself when designing a graphic:
+
+
+o	What are you trying to show? How important is it? Who is your audience? Is your audience familiar with the type of graph? How are you presenting the information?
+
+
+•	Reaching out for feedback and the perception of your graphic by viewers.
+
+
+Exercise 3
+
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "values": [
+      {"Date": "Q1-2017", "Completion Rate": 0.91, "Response Rate": 0.023},
+      {"Date": "Q2-2017", "Completion Rate": 0.93, "Response Rate": 0.018},
+      {"Date": "Q3-2017", "Completion Rate": 0.91, "Response Rate": 0.028},
+      {"Date": "Q4-2017", "Completion Rate": 0.89, "Response Rate": 0.023},
+      {"Date": "Q1-2018", "Completion Rate": 0.84, "Response Rate": 0.034},
+      {"Date": "Q2-2018", "Completion Rate": 0.88, "Response Rate": 0.027},
+      {"Date": "Q3-2018", "Completion Rate": 0.91, "Response Rate": 0.026},
+      {"Date": "Q4-2018", "Completion Rate": 0.87, "Response Rate": 0.039},
+      {"Date": "Q1-2019", "Completion Rate": 0.83, "Response Rate": 0.028}
+    ]
+  },
+  "repeat": {
+    "row": ["Completion Rate", "Response Rate"]
+  },
+  "spec": {
+    "width": 800,
+    "height": 200,
+    "title": "Completion and Response Rate through the Year Quarters",
+    "mark": "bar",
+    "encoding": {
+      "x": {"field": "Date", "type": "ordinal", "title": "Quarter"},
+      "y": {
+        "field": {"repeat": "row"},
+        "type": "quantitative",
+        "title": "Rate"
+      },
+      "opacity": {"value": 0.7}
+    }
+  }
+}
+'|> as_vegaspec()
+```
+
+
+
+I paid attention to my data to mark ratio and made sure I made my graphic simple to interpret. I also made sure to let my bars start from a baseline of 0 to make interpretation easy and straightforward.
+
