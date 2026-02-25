@@ -2,7 +2,294 @@
 title: "HW 7"
 format: html
 output-file: "index"
+execute:
+  echo: false
 ---
 
-Exercise 1
+Name: David Agbana
 
+Exercise 1\
+
+a.	List some guidelines/advice Wilke gives about creating bar charts.\
+i.	Whenever there are long titles for the bars, you could switch the x and y axes, so that the bar runs horizontally.\
+ii.	We should only rearrange bars when there is no natural ordering to the categories represented but if the bar represents unordered categories, it is best to arrange them by ascending or descending values.\
+iii.	Stacking bars in a graphic is useful when the sum of the amounts represented by the individual stacked bars is a meaningful amount. It is also helpful to add values to plots as it makes them less busy.\
+iv.	Grouped bars are useful when there is more than one category to be compared across the fields.\
+b.	It is not advisable to use bars when it would not be helpful to start the value of a field from zero as it would fail to convey the message of the graphic because the bar would be too long.\
+c.	An alternative to bars could be dot plots or heatmaps.\
+d.	He says that stacking bars in a graphic is useful when the sum of the amounts represented by the individual stacked bars is a meaningful amount. Stacking is also appropriate when the individual bars represent counts.\
+
+Exercise 1e
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 240,
+  "data": { "url": "https://calvin-data304.netlify.app/data/cow-movies.csv"
+  },
+  "mark": {
+    "type": "bar"
+      },
+  "encoding": {
+    "x": {
+      "field": "amount",
+      "type": "quantitative",
+      "axis": {
+        "title": "weekend gross (million USD)"
+      }
+    },
+    "y": {
+      "field": "title_short",
+      "type": "nominal",
+      "sort": "-gross",
+      "axis": {
+        "title": null
+      }
+    }
+  }
+}
+'|> as_vegaspec()
+```
+
+Exercise 1f i
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 350,
+  "data": { "url": "https://calvin-data304.netlify.app/data/cow-income.csv"
+  },
+  "mark": {"type": "bar"},
+  "transform": [
+    {
+      "filter": "datum.race === \'asian\' || datum.race === \'white\' || datum.race === \'hispanic\' || datum.race === \'black\'"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "race",
+      "type": "nominal",
+      "axis": {"title": ""},
+      "sort" : {"field": "median_income", "order": "descending"}
+    },
+    "y": {
+      "field": "median_income",
+      "type": "quantitative",
+      "axis": {
+        "title": "median income (USD)"
+      }
+    },
+    "color": {
+      "field": "age",
+      "type": "nominal",
+      "sort": ["15-24", "25-34", "35-44", "45-54", "55-64", "65-74", "≥75"],
+      "legend": {"title": "age (yrs)"}
+    },
+    "xOffset": {"field": "age", "type": "nominal", "sort": ["15-24", "25-34", "35-44", "45-54", "55-64", "65-74", "≥75"]}
+  }
+}
+'|> as_vegaspec()
+```
+
+Exercise 1f ii
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/cow-income.csv"
+  },
+  "facet": {
+    "row": {
+      "field": "race",
+      "type": "nominal",
+      "header": {"title": null}
+    }
+  },
+  "transform": [
+    {
+      "filter": "datum.race === \'asian\' || datum.race === \'white\' || datum.race === \'hispanic\' || datum.race === \'black\'"
+    }
+  ],  
+  "spec": {
+    "width": 300,
+    "height": 180,
+    "mark": {"type": "bar"},
+    "encoding": {
+      "x": {
+        "field": "age",
+        "type": "ordinal",
+        "axis": {"title": "age (years)"}
+      },
+      "y": {
+        "field": "median_income",
+        "type": "quantitative",
+        "title": "median income (USD)"
+      }
+    }
+  }
+}
+'|> as_vegaspec()
+```
+
+Exercise 1 g i
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/cow-gapminder.csv"
+  },
+  "width": 400,
+  "height": 500,
+  "mark": {
+    "type": "point",
+    "filled": true
+  },
+  "transform": [
+    {
+      "filter":  "datum.year === \'2007\' && (datum.country === \'Canada\' || datum.country === \'Costa Rica\' || datum.country === \'Puerto Rico\'|| datum.country === \'Chile\'|| datum.country === \'Cuba\'|| datum.country === \'United States\'|| datum.country === \'Uruguay\'|| datum.country === \'Mexico\'|| datum.country === \'Panama\'|| datum.country === \'Argentina\'|| datum.country === \'Ecuador\'|| datum.country === \'Venezuela\'|| datum.country === \'Nicaragua\'|| datum.country === \'Colombia\'|| datum.country === \'Jamaica\'|| datum.country === \'Brazil\'|| datum.country === \'Dominican Republic\'|| datum.country === \'El Salvador\'|| datum.country === \'Paraguay\'|| datum.country === \'Peru\'|| datum.country === \'Guatemala\'|| datum.country === \'Honduras\'|| datum.country === \'Trinidad and Tobago\'|| datum.country === \'Bolivia\' || datum.country === \'Haiti\')"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "lifeExp",
+      "type": "quantitative",
+      "scale": {"domain": [30, 82]},
+      "title": "life expectancy (years)"
+    },
+    "y": {
+      "field": "country",
+      "type": "nominal"
+    }
+  }
+}
+'|> as_vegaspec()
+```
+
+g.	For figure 6.12, the bars are too long and they draw attention away from the key feature of the data, the differences in life expectancy among the different countries.
+For figure 6.13, the countries are sorted alphabetically which makes it harder to understand the story that the graphic is trying to tell.
+
+Exercise 2
+
+a.	Watched\
+b.	List at least three pieces of advice you can glean from this video that might help you design good graphics.\
+  i.	Using boundary lines to highlight contrast between colors\
+  ii.	If you have categorical variables, putting it on the y axis instead of the x axis would make   it more compact. High data to ink ratio.\
+  iii.	When designing graphics, it is helpful to layer information or data, highlight the          information you care about and repeat design elements.\
+
+c.	There are two figures in this video that come from Chapter 1 of Tufte (2001). Did you spot them? Which figures are they?\
+Yes, they are:\
+i.	Figurative Map of the successive losses in men of the French Army in the Russian campaign 1812-1813.\
+ii.	E. J. Marey, La méthode graphique (Paris, 1885), p. 20.
+
+Exercise 3\
+a.	"mark": "rect", using color in the encoding and using grid configuration.
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://calvin-data304.netlify.app/data/cow-internet2.csv"
+  },
+  "width": 700,
+  "height": 500,
+  "transform": [
+    {
+      "filter": "datum.users != \'NA\' && datum.users != null || datum.year === \'2016\'"
+    }
+  ],
+  "mark": {
+    "type": "rect"
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "years"
+    },
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "users",
+        "order": "descending"
+      }
+    },
+    "color": {
+      "field": "users",
+      "type": "quantitative",
+      "title": "internet users / 100 people",
+      "legend": {
+        "orient": "top",
+        "values": [0, 25, 50, 75, 100]
+      },
+      "sort": "ascending"
+    },
+    "tooltip": [
+      {"field": "country", "type": "nominal"},
+      {"field": "year", "type": "ordinal"},
+      {"field": "users", "type": "quantitative"}
+    ]
+  }
+}
+'|> as_vegaspec()
+```
+
+b.	Done!\
+c.	He did not mention Heat maps at 20:10 but at 27:00, the problem he mentioned was that it might hard to point out the differences between some grids in a heat map because it is harder for the human eye to point out color difference as compared to shape/size.\
+d.	The heat map shows the general pattern of what those individual grid pieces mean. It makes sense of the noticeable change in mortality rates. i.e. the spikes reflecting world events. It is also easier to sense the pattern in my earlier heat map but it is not as easy and it becomes an issue to compare across countries.\
+
+Exercise 4
+
+a.	It is harder to decode angles and relative areas. So pie charts could be perceptually difficult to decode.\
+b.	He recons that pie charts are great for representing simple fractions and that none of the visualizations are superior over the other but it all depends on your dataset and the story you want to tell with your graphic.\
+c.	He presents stacked bars and side-by-side bars as alternatives to pie charts.
+He recommended pie charts for: Clearly visualizes the data as proportions of a whole, Visually emphasizes simple fractions, such as 1/2, 1/3, ¼ and for Looks visually appealing n for very small datasets.\
+He recommends stacked bars for: Clearly visualizes the data as proportions of a whole and says that it Works well for the visualization of many sets of proportions or time series of proportions.\
+He recommends side-by-side bars for: allowing easy visual comparison of the relative proportions, Looks visually appealing even for very small datasets and Works well when the whole is broken into many pieces.\
+d.  
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 400,
+  "data": {
+    "values": [
+      {"party": "CDU/CSU", "seats": 243},
+      {"party": "SPD", "seats": 214},
+      {"party": "FDP", "seats": 39}
+    ]
+  },
+  "encoding": {
+    "theta": {"field": "seats", "type": "quantitative", "stack": true},
+    "color": {"field": "party", "type": "nominal", "legend": null},
+    "tooltip": [
+      {"field": "party", "type": "nominal"},
+      {"field": "seats", "type": "quantitative", "title": "Seats"}
+    ]
+  },
+  "layer": [{
+    "mark": {"type": "arc", "outerRadius": 180}
+  }, {
+    "mark": {"type": "text", "radius": 210},
+    "encoding": {
+      "text": {"field": "party", "type": "nominal"}
+    }
+  }]
+}
+'|> as_vegaspec()
+```
