@@ -6,8 +6,10 @@ format:
 embed-resources: true
 ---
 
-[HomeWork 5](hw5/)
+[Homework 5](hw5/)
 \
-[HomeWork 6](hw6/)
+[Homework 6](hw6/)
 \
-[HomeWork 7](hw7/)
+[Homework 7](hw7/)
+\
+[Homework 8](hw8/)
