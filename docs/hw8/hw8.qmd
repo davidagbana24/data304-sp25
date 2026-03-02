@@ -1,5 +1,267 @@
 ---
 title: "HW8"
 format: html
+execute:
+  echo: false
 ---
 
+Name: David Agbana
+
+Exercise 1
+
+Graphic I
+```{r}
+#| message: false
+library(vegawidget)
+library(vegabrite)
+library(readr)
+library(tidyr)
+
+df <- read_csv("https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.csv")
+df_long <- df |> pivot_longer(c(demand, capacity), names_to = "type", values_to = "value")
+
+vl_chart(df_long, width = 400, height = 300) |>
+  vl_mark_bar() |>
+  vl_encode_x("date:O") |>
+  vl_encode_xOffset("type:N") |>
+  vl_encode_y("value:Q") |>
+  vl_encode_fill("type:N")
+```
+
+Graphic II
+```{r}
+#| message: false
+library(vegawidget)
+library(vegabrite)
+library(readr)
+library(tidyr)
+
+df <- read_csv("https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.csv")
+df_long <- df |> pivot_longer(c(demand, capacity), names_to = "type", values_to = "value")
+
+vl_chart(df_long, width = 400, height = 300) |>
+  vl_mark_line() |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("value:Q") |>
+  vl_encode_color("type:N") |>
+  as_vegaspec()
+```
+
+Graphic III
+```{r}
+#| message: false
+library(vegawidget)
+library(vegabrite)
+library(readr)
+
+df <- read_csv("https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.csv")
+
+layerD <- vl_chart() |> 
+  vl_mark_bar(width = 10, color = "coral") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("demand:Q", title = "Dmeand(Orange)")
+
+layerC <- vl_chart() |> 
+  vl_mark_bar(width = 20, color = "steelblue") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("capacity:Q", title = "Capacity(Blue)")
+
+(layerD + layerC) |>
+  vl_add_data(values = df) |>
+  as_vegaspec()
+```
+
+Graphic IV
+```{r}
+#| message: false
+library(vegawidget)
+library(vegabrite)
+library(readr)
+
+df <- read_csv("https://calvin-data304.netlify.app/data/swd-lets-practice-ex-2-3.csv")
+
+layerD <- vl_chart() |> 
+  vl_mark_bar(width = 20, color = "coral") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("demand:Q", title = "Unmet Demand(Orange)")
+
+layerC <- vl_chart() |> 
+  vl_mark_bar(width = 20, color = "steelblue") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("capacity:Q", title = "Capacity(Blue)")
+
+(layerD + layerC) |>
+  vl_add_data(values = df) |>
+  as_vegaspec()
+```
+
+Graphic V
+```{r}
+#| message: false
+#| warning: false
+layerLine <- vl_chart() |>
+  vl_mark_rule() |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("capacity:Q") |>
+  vl_encode_y2("demand:Q")
+
+layerD <- vl_chart() |>
+  vl_mark_point(filled = FALSE, color = "coral") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("demand:Q", title = "Demand(orange)")
+
+layerC <- vl_chart() |>
+  vl_mark_point(filled = TRUE, color = "steelblue") |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("capacity:Q", title = "Capacity(blue)")
+
+(layerLine + layerD + layerC) |>
+  vl_add_data(values = df) |>
+  as_vegaspec()
+```
+
+Graphic VI
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+
+df <- df |> mutate(unmet_demand = demand - capacity)
+
+layerL <- vl_chart() |>
+  vl_mark_line() |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("unmet_demand:Q")
+
+layerP <- vl_chart() |>
+  vl_mark_point(filled = TRUE) |>
+  vl_encode_x("date:O") |>
+  vl_encode_y("unmet_demand:Q")
+
+(layerL + layerP) |>
+  vl_add_data(values = df) |>
+  as_vegaspec()
+```
+
+```{r}
+#| message: false
+#| warning: false
+library(vegawidget)
+library(vegabrite)
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+
+jobs_url <- "https://cdn.jsdelivr.net/npm/vega-datasets@2.8.0/data/jobs.json"
+jobs <- fromJSON(jobs_url)
+```
+\
+Exercise 2a
+```{r}
+#| message: false
+#| warning: false
+
+jobs |>
+  group_by(year, sex) |>
+  summarise(total_perc = sum(perc), .groups = "drop") |>
+  vl_chart(width = 400, height = 300) |>
+  vl_mark_point() |>
+  vl_encode_x("year:O") |>
+  vl_encode_y("total_perc:Q") |>
+  vl_encode_color("sex:N") |>
+  as_vegaspec()
+```
+From the Graphic above, I am able to realise a pattern in the total_perc field. The sum of the total_perc for men and women is equal to 1. This means perc is the fraction of the people in that job depending on their gender.
+\
+Exercise 2b
+```{r}
+#| message: false
+#| warning: false
+jobs |>
+  filter(year %in% c(1850, 1900, 1940, 2000)) |>
+  pivot_wider(names_from = sex, values_from = perc, id_cols = c(job, year)) |>
+  vl_chart(width = 200, height = 200) |>
+  vl_mark_point() |>
+  vl_encode_x("men:Q") |>
+  vl_axis_x(format = ".0%") |>
+  vl_encode_y("women:Q") |>
+  vl_axis_y(format = ".0%") |>
+  vl_facet_column("year:O", title = "") |>
+  vl_encode_tooltip_array(list("job", "men", "women")) |>
+  as_vegaspec()
+```
+\
+Exercise 2c
+```{r}
+#| message: false
+#| warning: false
+jobs |>
+  filter(year %in% c(1850, 1900, 1940, 2000)) |>
+  group_by(year, sex) |>
+  mutate(perc_of_sex = count / sum(count)) |>
+  ungroup() |>
+  pivot_wider(names_from = sex, values_from = perc_of_sex, id_cols = c(job, year)) |>
+  vl_chart(width = 200, height = 200) |>
+  vl_mark_point() |>
+  vl_encode_x("men:Q") |>
+  vl_axis_x(format = ".0%") |>
+  vl_encode_y("women:Q") |>
+  vl_axis_y(format = ".0%") |>
+  vl_facet_column("year:O", title = "") |>
+  vl_encode_tooltip_array(list("job", "men", "women")) |>
+  as_vegaspec()
+```
+\
+Exercise 3
+```{r}
+#| message: false
+#| warning: false
+library(vegawidget)
+library(vegabrite)
+library(readr)
+library(dplyr)
+library(tidyr)
+
+gas_url <- "https://calvin-data304.netlify.app/data/pump_price_for_gasoline_us_per_liter.csv"
+countries_url <- "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv"
+
+gas <- read_csv(gas_url)
+countries <- read_csv(countries_url)
+
+# Converting to long, per gallon, join with countries
+gas_long <- gas |>
+  pivot_longer(-country, names_to = "year", values_to = "price_per_liter", values_transform = list(price_per_liter = as.numeric)) |>
+  mutate(
+    year = as.integer(year),
+    price_per_gallon = price_per_liter * 3.785
+  ) |>
+  filter(!is.na(price_per_gallon))
+
+# Joining on name
+gas_joined <- gas_long |>
+  left_join(countries, by = c("country" = "name"))
+
+# Check unmatched countries
+unmatched <- gas_joined |>
+  filter(is.na(region)) |>
+  distinct(country)
+```
+
+```{r}
+#| message: false
+#| warning: false
+# Most recent year available per country
+gas_2016 <- gas_joined |>
+  filter(year == 2016, !is.na(region))
+
+# Chart: price by country, colored by region, using alpha-3 code as label
+gas_2016 |>
+  vl_chart(width = 600, height = 400) |>
+  vl_mark_point() |>
+  vl_encode_x("price_per_gallon:Q") |>
+  vl_axis_x(title = "Price per Gallon (USD)") |>
+  vl_encode_y("region:N") |>
+  vl_encode_color("region:N") |>
+  vl_encode_tooltip_array(list("country", "alpha-3", "region", "price_per_gallon")) |>
+  as_vegaspec()
+```
