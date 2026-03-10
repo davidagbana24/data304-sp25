@@ -47,4 +47,4 @@ Perception and more practice
 ### Homework 8
 Data operations and graphics
 
-[Homework 8](hw8/)
+[See here ->](hw8/)
