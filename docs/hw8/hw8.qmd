@@ -1,14 +1,20 @@
 ---
-title: "HW8"
+title: ""
 format: 
   html:
-    output-file: "index"
     code-fold: true
+    theme: morph
+    page-layout: full
+output-file: "index"
 execute:
   echo: true
 ---
 
+::: {.text-center .py-5}
+# Homework 8
+
 Name: David Agbana
+:::
 
 Exercise 1
 

@@ -5,8 +5,6 @@ format:
     output-file: "index"
     theme: morph # quartz is still an option
     css: styles.css
-    respect-user-color-scheme: true
-    toc: false
     page-layout: full
 embed-resources: true
 ---
@@ -20,30 +18,37 @@ embed-resources: true
 ::: {.grid}
 
 ::: {.g-col-5}
+::: {.hw-card}
 ### Homework 5
 Starting a Portfolio.
 
 [See here ->](hw5/)
 :::
+:::
 \
 
 ::: {.g-col-5}
+::: {.hw-card}
 ### Homework 6
 Tufte and Composite Graphics
 
 [See here ->](hw6/)
 :::
+:::
 \
 
 ::: {.g-col-5}
+::: {.hw-card}
 ### Homework 7
 Perception and more practice
 
 [See here ->](hw7/)
 :::
+:::
 \
 
 ::: {.g-col-5}
+::: {.hw-card}
 ### Homework 8
 Data operations and graphics
 

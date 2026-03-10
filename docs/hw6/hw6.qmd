@@ -1,15 +1,20 @@
 ---
-title: "HW6"
+title: ""
 format: 
   html:
     code-fold: true
+    theme: morph
+    page-layout: full
 output-file: "index"
 execute:
   echo: true
 ---
 
-Name: David Agbana
+::: {.text-center .py-5}
+# Homework 6
 
+Name: David Agbana
+:::
 
 Exercise 1
 
