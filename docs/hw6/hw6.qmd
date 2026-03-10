@@ -1,14 +1,14 @@
 ---
 title: "HW6"
-format: html
+format: 
+  html:
+    code-fold: true
 output-file: "index"
 execute:
-  echo: false
+  echo: true
 ---
 
 Name: David Agbana
-
-HW 6
 
 
 Exercise 1

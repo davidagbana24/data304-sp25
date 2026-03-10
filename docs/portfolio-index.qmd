@@ -1,15 +1,50 @@
 ---
-title: "David Agbana's Data 304 Portfolio"
+title: ""
 format:
   html:
     output-file: "index"
+    theme: morph # quartz is still an option
+    css: styles.css
+    respect-user-color-scheme: true
+    toc: false
+    page-layout: full
 embed-resources: true
 ---
 
-[Homework 5](hw5/)
+::: {.text-center .py-5}
+# Data 304: Visualizing Data and Models 
+
+## David Agbana's Portfolio
+
+
+::: {.grid}
+
+::: {.g-col-5}
+### Homework 5
+Starting a Portfolio.
+
+[See here ->](hw5/)
+:::
 \
-[Homework 6](hw6/)
+
+::: {.g-col-5}
+### Homework 6
+Tufte and Composite Graphics
+
+[See here ->](hw6/)
+:::
 \
-[Homework 7](hw7/)
+
+::: {.g-col-5}
+### Homework 7
+Perception and more practice
+
+[See here ->](hw7/)
+:::
 \
+
+::: {.g-col-5}
+### Homework 8
+Data operations and graphics
+
 [Homework 8](hw8/)

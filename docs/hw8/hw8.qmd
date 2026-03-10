@@ -1,8 +1,10 @@
 ---
 title: "HW8"
-format: html
+format: 
+  html:
+    code-fold: true
 execute:
-  echo: false
+  echo: true
 ---
 
 Name: David Agbana

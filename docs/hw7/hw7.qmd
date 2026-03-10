@@ -1,9 +1,11 @@
 ---
 title: "HW 7"
-format: html
+format: 
+  html:
+    code-fold: true
 output-file: "index"
 execute:
-  echo: false
+  echo: true
 ---
 
 Name: David Agbana
