@@ -53,3 +53,13 @@ Perception and more practice
 Data operations and graphics
 
 [See here ->](hw8/)
+:::
+:::
+\
+
+::: {.g-col-12}
+::: {.hw-card}
+### Final Portfolio
+Data operations and graphics
+
+[See here ->](final/) (In Progress)
