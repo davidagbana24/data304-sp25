@@ -3,6 +3,7 @@ title: ""
 format: 
   html:
     code-fold: true
+    code-tools: true
     theme: morph
     page-layout: full
 output-file: "index"
@@ -13,7 +14,424 @@ execute:
 [← Back to Portfolio](../index.html)
 
 ::: {.text-center .py-5}
-# Final Portfolio
+# Data 304 Final Portfolio
 
 Name: David Agbana
 :::
+
+
+### Exercise 1 \
+a.	For me, the second graphic under number 2 (Comparing Kits) is one that I’m impressed by and it passes the data to be translated into information in a genius way. This plot uses the x, y axes, color and column encoding with the x axis being “kit” and the y axis being the “genetic share”. The designer used color to encode region and column to encode the individual.\
+I love the fact that the designer used the columns as this puts the twin pairs next to each other. They also used a line mark with the point being true. All this creates a graphic that places each DNA kit’s genetic share value for each person next to each other making it easy to compare the kits. The line encoding also creates a unique pattern for each individual which makes it easy to spot differences between the kits and the each twin pair!\
+b.	The 8th graphic has some fundamental errors which makes the graphic lose its true purpose and makes the graphic confusing. Starting with the x and y encoding, the y axis is meant to represent genetic share but it has random value points and proceeds in a decreasing order as you go up the axis. This confuses the reader/observer. The designer also did not make the best use of the mark they chose. They tried to represent the complete genetic share of a person with one bar but did not account for the fact that there are different regions that make up the whole genetic share. This makes it almost impossible to understand anything about the data with the graph. A viewer might not even know that there are different regions represented in the genetic share!
+
+c.i.\
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "https://calvin-data304.netlify.app/data/twins-genetics-wide.json"},
+  "width": 140,
+  "height": 500,
+  "title": "How Much Similar Are Twins?",
+  "mark": {"type": "bar"},
+  "transform": [
+    {
+      "calculate": "(datum.Ancestry + datum[\\\"23andMe\\\"] + datum.MyHeritage) / 3",
+      "as": "avg_genetic_share"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "id",
+      "type": "nominal",
+      "title": ""
+    },
+    "y": {"field": "avg_genetic_share", "type": "quantitative", "title": "Average Genetic Share"},
+
+    "column": {"field": "pair", "type": "nominal", "title": "Twin Pairs"},
+
+    "color":{"field": "region", "title": "Region"},
+    "xOffset": {"field": "region"},
+    "tooltip": [
+      {"field": "twin", "type": "nominal", "title": "Twin"}, {"field": "region", "type": "nominal"},
+      {"field": "avg_genetic_share", "type": "quantitative", "format": ".1%", "title": "Avg Share"}
+    ]
+  }
+}
+'|> as_vegaspec()
+```
+
+c.ii.
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "https://calvin-data304.netlify.app/data/twins-genetics-long.json"},
+  "width": 65,
+  "height": 500,
+  "title": "How Different Are the Results of the Kits?",
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {
+      "field": "kit",
+      "type": "nominal",
+      "title": ""
+    },
+    "y": {"field": "genetic share", "type": "quantitative", "title": "Genetic Share"},
+
+    "column": {"field": "twin", "type": "nominal", "title": "Twins"},
+
+    "color":{"field": "region", "title": "Region"},
+    "xOffset": {"field": "region"},
+    "tooltip": [
+      {"field": "twin", "type": "nominal", "title": "Twin"}, {"field": "region", "type": "nominal"},
+      {"field": "genetic share", "type": "quantitative", "format": ".1%", "title": "Genetic Share"}
+    ]
+  }
+}
+'|> as_vegaspec()
+```
+\
+
+d.\
+For the first graphic, we compare the twins based on thier genetic makeup from each region. What might not be noticed here is that the "Average Genetic Share" is actually a mean of the genetic share as reported by the three companies provided in the dataset, which in my opinion, lead to a less bias and more general view of the overall similarities between each pair of twins. The twins are put side-by-side and using the encoding of the y-axis and the tooltip, we can compare their values across the graphic. Eventually, with some little arithmetic, we can recognise which twins are more similar than others.\
+In the second graph, we no want to know the relative performance of each of the kits. Similarly, we are able to compare the trend for each person and see the genetic sharing for the twins based on a particular company. This helps to see where there is unanimous verdict on the genetic makeup of a person based on the region and where there are differences which could (with further research) expose if companies have not understood genetic characteristics tied to people from a particular region.\
+
+
+
+### Exercise 2:\
+Challenge 2\
+Issues with the Graphic:\
+•	The Stacked bars make it difficult to see the trends of each individual touchpoint, therefore highlighting it does not necessarily contribute to the story that the graph is trying to tell; Total touchpoints have increased slightly to 500k.\
+•	It is difficult to interpret where the values for the total touchpoints came from and how it came about. This is because our data only shows us values which are very much smaller for each of the touchpoints depending on the month.\
+•	It is also unclear if the values given for the touchpoints show percentage increase of the points.\
+
+```{r}
+library(vegawidget)
+'
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "https://calvin-data304.netlify.app/data/swd-lets-practice-ex-5-03.csv"},
+  "width": 600,
+  "height": 350,
+  "title": "Trend of Touchpoints through the years 2018 and 2019",
+  "transform": [
+    {
+      "calculate": "toNumber(datum[\'Phone Touchpoints\']) + toNumber(datum[\'Chat Touchpoints\']) + toNumber(datum[\'Email Touchpoints\'])",
+      "as": "Total"
+    },
+    {"calculate": "year(datum.Date)", "as": "Year"},
+    {"calculate": "month(datum.Date)", "as": "MonthNum"},
+    {"calculate": "[\'Jan\',\'Feb\',\'Mar\',\'Apr\',\'May\',\'Jun\',\'Jul\',\'Aug\',\'Sep\',\'Oct\',\'Nov\',\'Dec\'][month(datum.Date)]", "as": "Month"},
+    {"filter": "datum.Year === 2018 || datum.Year === 2019"}
+  ],
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {
+      "field": "MonthNum",
+      "type": "ordinal",
+      "title": "Month",
+      "axis": {
+        "labelAngle": 0,
+        "labelExpr": "[\'Jan\',\'Feb\',\'Mar\',\'Apr\',\'May\',\'Jun\',\'Jul\',\'Aug\',\'Sep\',\'Oct\',\'Nov\',\'Dec\'][datum.value]"
+      }
+    },
+    "y": {
+      "field": "Total",
+      "type": "quantitative",
+      "title": "Total Touchpoints",
+      "scale": {"zero": false}
+    },
+    "color": {
+      "field": "Year",
+      "type": "ordinal",
+      "legend": {"orient": "top"}
+    },
+    "tooltip": [
+      {"field": "Year", "type": "ordinal"},
+      {"field": "Month", "type": "nominal"},
+      {"field": "Total", "type": "quantitative"}
+    ]
+  },
+  "config": {
+    "axis": {"gridOpacity": 0.0}
+  }
+}
+'|> as_vegaspec()
+```
+\
+
+### Exercise 3 \
+
+a.  [Find Tanzania Dataset Here ->](/Tanzania dataset.csv)\
+
+b.
+```{r}
+library(vegawidget)
+
+'{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 340,
+  "data": {"url": "Tanzania dataset.csv"},
+  "title": "Tracking Child Birth Rates and Factors Affecting it in Tanzania",
+  "transform": [
+    {"fold": ["Unmet Need (%)", "Use of Modern Contraception (%)"], "as": ["indicator", "value"]}
+  ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "quantitative",
+      "scale": {"domain": [1990, 2016]},
+      "axis": {"format": "d", "labelAngle": 0}
+    },
+    "y": {"field": "value", "type": "quantitative", "title": "Percentage (%)"},
+    "color": {
+      "field": "indicator",
+      "type": "nominal",
+      "title": null,
+      "scale": {
+        "domain": ["Unmet Need (%)", "Use of Modern Contraception (%)"],
+        "range": ["orange", "green"]
+      },
+      "legend": {"orient": "right"}
+    }
+  },
+  "layer": [
+    {"mark": {"type": "line"}},
+    {
+      "transform": [{"filter": "datum.indicator === \'Use of Modern Contraception (%)\'"}],
+      "mark": {"type": "point", "filled": true},
+      "encoding": {
+        "size": {
+          "field": "Total Fertility Rate",
+          "type": "quantitative",
+          "scale": {"domain": [5.0, 6.5], "range": [80, 450]},
+          "legend": {"orient": "right", "title": "Total Fertility Rate"}
+        }
+      }
+    },
+    {
+      "transform": [{"filter": "datum.indicator === \'Use of Modern Contraception (%)\'"}],
+      "mark": {"type": "text", "color": "grey", "dy": -15},
+      "encoding": {
+        "text": {"field": "Total Fertility Rate", "type": "quantitative", "format": ".1f"}
+      }
+    },
+    {
+      "params": [{"name": "hover", "select": {"type": "point", "on": "mouseover", "nearest":                      true}}],
+      "mark": {"type": "rule", "color": "grey", "strokeWidth": 1},
+      "encoding": {
+        "opacity": {"condition": {"param": "hover", "empty": false, "value": 1}, "value": 0},
+        "tooltip": [
+          {"field": "Year",             "type": "quantitative"},
+          {"field": "indicator",        "type": "nominal",      "title": "Indicator"},
+          {"field": "value",            "type": "quantitative", "title": "Value (%)"},
+          {"field": "Total Fertility Rate", "type": "quantitative"}
+        ]
+      }
+    }
+  ]
+}' |> as_vegaspec()
+```
+\
+
+c.	With the raw data initially presented, I had to look through and decide how I wanted to change the titles of some fields to make them pass their meaning with high data to ink ratio. I also had to standardize the field, year’s values as there were values spanned 2 or more years. Using 1 year per row makes the data easily quantitative and other calculations and functions could be performed on it.\
+
+
+As for the Story the graphic tells, it walks us through the journey of Child birth, Birth control success and challenges in Tanzania from 1991 up till 2016. The relationship between the Average Number of Child per Mother (represented by Total Fertility Rate) can be seen to be reducing over time as the Use of Modern Contraception increases. This shows the effectiveness of the “Modern Contraception”. Also as the Use of Modern Contraception Increases, the Unmet need reduces, showing that with the use of these contraception, the needs related to family planning are met in some way.
+
+It is also important to note the relationship between the Total Fertility Rate and the Unmet need. In 2004, we see the Total Fertility Rate increase after a decrease in previous years and the unmet need also increased after decreasing in previous years. This tells us that when the needs for effective family planning are not met, there is an increase in Total Fertility Rate which is also the Average Number of Child per Mother!\
+
+
+### Exercise 4 \
+a.i.\
+```{r}
+#| message: false
+library(tidyverse)
+
+genres_keep <- c("blues", "chill", "classical", "country", "edm", "electronic", "folk", "gospel", "hip-hop", "indie", "jazz", "k-pop", "pop", "pop-film", "r-n-b", "rock", "sad")
+
+spotify <- read.csv("spotify_dataset_original.csv") |>
+  distinct(track_id, .keep_all = TRUE) |>
+  filter(popularity > 0) |>
+  filter(track_genre %in% genres_keep) |>
+  select(-track_id, -album_name)
+
+library(vegawidget)
+library(tidyverse)
+
+genre_avg <- spotify |>
+  group_by(track_genre) |>
+  summarise(avg_popularity = round(mean(popularity), 1)) |>
+  arrange(desc(avg_popularity))
+
+list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(values = genre_avg),
+  width = 500,
+  height = 400,
+  title = "Which Genres Are Most Popular?",
+  mark = list(type = "bar"),
+  encoding = list(
+    x = list(
+      field = "avg_popularity",
+      type = "quantitative",
+      title = "Average Popularity (100)",
+      scale = list(domain = list(0, 70))
+    ),
+    y = list(
+      field = "track_genre",
+      title = "Genre",
+      type = "nominal",
+      sort = "-x"
+    ),
+    color = list(
+      field = "avg_popularity",
+      type = "quantitative",
+      scale = list(scheme = "greens"),
+      legend = NULL
+    ),
+    tooltip = list(
+      list(field = "track_genre",    type = "nominal",      title = "Genre"),
+      list(field = "avg_popularity", type = "quantitative", title = "Avg. Popularity")
+    )
+  )
+) |> as_vegaspec()
+```
+\  
+* This simple bar graphic explores the data widely and generally by checking the average popularity of a genre. It was a great starting point for to explore the data and have an idea of relationships that exist between the different fields we have in the data. This case being between genre and popularity.\
+
+a.ii.
+```{r}
+#| message: false
+library(vegawidget)
+library(tidyverse)
+
+df_long <- spotify |>
+  select(popularity, danceability, energy, loudness, tempo, speechiness, acousticness) |>
+  mutate(across(-popularity, ~ round((.x - min(.x)) / (max(.x) - min(.x)) * 100, 1))) |>
+  pivot_longer(-popularity, names_to = "feature", values_to = "value")
+
+list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(values = df_long),
+  title = "What Audio Features Contributes to Popularity?",
+  columns = 3,
+  facet = list(
+    field = "feature",
+    type = "nominal",
+    title = NULL
+  ),
+  spec = list(
+    width = 300,
+    height = 200,
+    layer = list(
+      list(
+        mark = list(type = "point", opacity = 0.15, size = 10, color = "blue"),
+        encoding = list(
+          x = list(field = "value",      type = "quantitative", title = NULL),
+          y = list(field = "popularity", type = "quantitative", title = "Popularity")
+        )
+      ),
+      list(
+        mark = list(type = "line", color = "red", strokeWidth = 2),
+        transform = list(
+          list(
+            regression = "popularity",
+            on = "value",
+            groupby = list("feature")
+          )
+        ),
+        encoding = list(
+          x = list(field = "value",      type = "quantitative"),
+          y = list(field = "popularity", type = "quantitative")
+        )
+      )
+    )
+  )
+) |> as_vegaspec()
+```
+\
+* Over here, we explore the possible relationships between even more fields and popularity. We put a focus on the directly measurable quantities that are features of different songs. We have a lot of data for this so using the line to highlight the main trend was very helpful as there are so many points drawn out. If I had used only the scatter plot, it would be harder to catch the trend. Surprisingly or not, we are able to see that louder, more danceable, more energetic, more speechy music tends to be more popular while more acoustic music tends to be less popular and the tempo is not a big determinant of the popularity!
+
+a.iii.\
+```{r}
+library(vegawidget)
+library(tidyverse)
+
+genre_correlations <- spotify |>
+  select(track_genre, popularity, danceability, energy, loudness, tempo, speechiness, acousticness) |>
+  group_by(track_genre) |>
+  summarise(
+    danceability = cor(danceability, popularity),
+    energy       = cor(energy, popularity),
+    loudness     = cor(loudness, popularity),
+    tempo        = cor(tempo, popularity),
+    speechiness  = cor(speechiness, popularity),
+    acousticness = cor(acousticness, popularity)
+  ) |>
+  pivot_longer(-track_genre, names_to = "feature", values_to = "correlation") |>
+  mutate(correlation = round(correlation, 2))
+
+list(
+  `$schema` = "https://vega.github.io/schema/vega-lite/v5.json",
+  data = list(values = genre_correlations),
+  width = 500,
+  height = 400,
+  title = list(
+    text = "Do we understand the relationship between Genres, Features and Popularity?",
+    subtitle = "Red = feature negatively linked to popularity. Blue = positively linked."
+  ),
+  mark = list(type = "rect"),
+  encoding = list(
+    x = list(field = "feature",     type = "nominal", title = NULL),
+    y = list(field = "track_genre", type = "nominal", title = NULL,
+             sort = list(field = "correlation", op = "mean", order = "descending")),
+    color = list(
+      field = "correlation",
+      type = "quantitative",
+      scale = list(scheme = "bluered", domain = list(-1, 1)),
+      title = "Correlation with popularity"
+    ),
+    tooltip = list(
+      list(field = "track_genre",  type = "nominal",      title = "Genre"),
+      list(field = "feature",      type = "nominal",      title = "Feature"),
+      list(field = "correlation",  type = "quantitative", title = "Correlation")
+    )
+  )
+) |> as_vegaspec()
+```
+\
+* Here, I essential tried to cross examine our findings from the previous graphics. This could help us see the correlation in one space and now we can infer that kpop is popular because it has low acoustic features and it makes good use of loudness.\
+I tried to use Good data to ink ratio.\
+Using Repetition helps to show relationship across fields.\
+Using color for contrasting rather than size being more effective.\
+
+Data Source: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset?resource=download)
+\
+
+### Exercise 5 \
+1. Encoding Channels: I used color in a couple of my graphics, size in Exercise 3, offset and column in Exercise 1.\
+2. Layers: I used layers in Exercise 3 and 4.\
+3. Facets: I used facets in Exercise 4.ii.\
+4. Concatenation or Repeat: 
+5. Non-default scale or guide setting: in exercise 3 and 4.\
+6. Tooltips: I used in exercise 1, 3 and 4.\
+7. Another kind of Interaction: I used hover in Exercise 3.\
+
+### Exercise 6 \
+a. Cite 2 or 3 specific examples in the graphics in your portfolio where you used a feature of Vega-Lite/vegabrite/Altair/altair that we did not learn in class.\
+i. In the Tanzania graphic, I used fold under transform from vegalite documentation to reshape the columns; unmet need and use of modern contraception.\
+ii. I used cor() to compute the correlation between the audio features and popularity.\
+iii. I used mutate() to round the values of the results of the correlations.\
+
+b. Cite 2 or 3 specific examples where you followed the advice in one of the resources below.
+i. I followed Wilke's advice on the way to handle bars with long labels and his advice to arrange bars sorted as long as the data is not ordinal. [Reference](https://clauswilke.com/dataviz/visualizing-amounts.html)\
+ii. I also tried to follow Tufte's Data-ink ratio maximization in most of my graphs. My proudest being Exercise 2. [Reference](https://kyl.neocities.org/books/%5BTEC%20TUF%5D%20the%20visual%20display%20of%20quantitative%20information.pdf).\
+iii. From Knaflic, I made sure to use baselines for bars, and I employed the use of tooltips to make sure I wasn't putting too many variables on one axis! [Reference](https://files.myopenmath.com/cfiles/317877/StorytellingwithDataLetsPracticebyColeNussbaumerKnaflic-chapter2.pdf)

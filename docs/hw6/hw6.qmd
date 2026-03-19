@@ -3,6 +3,7 @@ title: ""
 format: 
   html:
     code-fold: true
+    code-tools: true
     theme: morph
     page-layout: full
 output-file: "index"

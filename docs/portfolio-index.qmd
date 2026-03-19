@@ -6,6 +6,7 @@ format:
     theme: morph # quartz is still an option
     css: styles.css
     page-layout: full
+    code-tools: true
 embed-resources: true
 ---
 
@@ -16,6 +17,16 @@ embed-resources: true
 
 
 ::: {.grid}
+
+::: {.g-col-11}
+::: {.hw-card}
+### Final Portfolio
+Data operations and graphics
+
+[See here ->](final/) (Done!)
+:::
+:::
+\
 
 ::: {.g-col-5}
 ::: {.hw-card}
@@ -53,13 +64,3 @@ Perception and more practice
 Data operations and graphics
 
 [See here ->](hw8/)
-:::
-:::
-\
-
-::: {.g-col-12}
-::: {.hw-card}
-### Final Portfolio
-Data operations and graphics
-
-[See here ->](final/) (In Progress)
