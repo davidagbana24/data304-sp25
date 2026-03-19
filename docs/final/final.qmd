@@ -427,11 +427,11 @@ Data Source: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipa
 
 ### Exercise 6 \
 a. Cite 2 or 3 specific examples in the graphics in your portfolio where you used a feature of Vega-Lite/vegabrite/Altair/altair that we did not learn in class.\
-i. In the Tanzania graphic, I used fold under transform from vegalite documentation to reshape the columns; unmet need and use of modern contraception.\
-ii. I used cor() to compute the correlation between the audio features and popularity.\
-iii. I used mutate() to round the values of the results of the correlations.\
+. In the Tanzania graphic, I used fold under transform from vegalite documentation to reshape the columns; unmet need and use of modern contraception.\
+. I used cor() to compute the correlation between the audio features and popularity.\
+. I used mutate() to round the values of the results of the correlations.\
 
 b. Cite 2 or 3 specific examples where you followed the advice in one of the resources below.
-i. I followed Wilke's advice on the way to handle bars with long labels and his advice to arrange bars sorted as long as the data is not ordinal. [Reference](https://clauswilke.com/dataviz/visualizing-amounts.html)\
-ii. I also tried to follow Tufte's Data-ink ratio maximization in most of my graphs. My proudest being Exercise 2. [Reference](https://kyl.neocities.org/books/%5BTEC%20TUF%5D%20the%20visual%20display%20of%20quantitative%20information.pdf).\
-iii. From Knaflic, I made sure to use baselines for bars, and I employed the use of tooltips to make sure I wasn't putting too many variables on one axis! [Reference](https://files.myopenmath.com/cfiles/317877/StorytellingwithDataLetsPracticebyColeNussbaumerKnaflic-chapter2.pdf)
+. I followed Wilke's advice on the way to handle bars with long labels and his advice to arrange bars sorted as long as the data is not ordinal. [Reference](https://clauswilke.com/dataviz/visualizing-amounts.html)\
+. I also tried to follow Tufte's Data-ink ratio maximization in most of my graphs. My proudest being Exercise 2. [Reference](https://kyl.neocities.org/books/%5BTEC%20TUF%5D%20the%20visual%20display%20of%20quantitative%20information.pdf).\
+. From Knaflic, I made sure to use baselines for bars, and I employed the use of tooltips to make sure I wasn't putting too many variables on one axis! [Reference](https://files.myopenmath.com/cfiles/317877/StorytellingwithDataLetsPracticebyColeNussbaumerKnaflic-chapter2.pdf)
